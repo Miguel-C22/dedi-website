@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { useScrolled } from '../hooks/useScrolled';
+import { buyCategoryLinks, solutionsNavLinks } from '../data';
 import MobileMenu from './MobileMenu';
 import SearchOverlay from './SearchOverlay';
 
@@ -79,14 +80,7 @@ export default function Header({ onOpenQuote }: HeaderProps) {
               <div className={`dn-dropdown-panel${openMenu === 'solutions' ? ' open' : ''}`}>
                 <div className="dn-container" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 48, padding: '36px 32px 40px' }}>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '28px 32px' }}>
-                    {[
-                      ['IT Asset Disposition', 'Secure processing & recovery'],
-                      ['Board-Level Repair', 'Specialized technical repair'],
-                      ['3PL & Fulfillment', 'Warehousing & global shipping'],
-                      ['Global Hardware Supply', 'Sourcing worldwide'],
-                      ['Asset Remarketing', 'Strategic resale network'],
-                      ['Warranty & Support', 'Extended coverage'],
-                    ].map(([title, sub]) => (
+                    {solutionsNavLinks.map(({ title, sub }) => (
                       <a key={title} href="#" onClick={e => e.preventDefault()} className="dn-focus" style={{ display: 'block' }}>
                         <div style={{ fontWeight: 700, color: 'oklch(0.22 0.01 255)', fontSize: 15, marginBottom: 4 }}>{title}</div>
                         <div style={{ fontSize: 13.5, color: 'oklch(0.45 0.01 255)' }}>{sub}</div>
@@ -118,7 +112,7 @@ export default function Header({ onOpenQuote }: HeaderProps) {
                   <div>
                     <div style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: 1.2, color: 'oklch(0.56 0.17 255)', textTransform: 'uppercase', marginBottom: 16 }}>Categories</div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                      {['Switches', 'Routers', 'Firewalls', 'Servers', 'Storage', 'Optics & Transceivers'].map(label => (
+                      {buyCategoryLinks.map(label => (
                         <a key={label} href="#" onClick={e => e.preventDefault()} className="dn-focus" style={{ fontSize: 15, color: 'oklch(0.28 0.01 255)' }}>{label}</a>
                       ))}
                     </div>
@@ -160,15 +154,25 @@ export default function Header({ onOpenQuote }: HeaderProps) {
             <button className="dn-btn-primary dn-focus" onClick={onOpenQuote} style={{ padding: '10px 20px', fontSize: 14 }}>Request a Quote</button>
           </div>
 
-          <button className="dn-mobile-only dn-focus icon-btn" aria-label="Menu" style={{ background: 'none', border: 'none', padding: 6, marginLeft: 'auto', gap: 16, alignItems: 'center' }}>
-            <span onClick={toggleSearch} aria-label="Search" style={{ display: 'flex' }}>
+          <div className="dn-mobile-only" style={{ alignItems: 'center', gap: 6, marginLeft: 'auto' }}>
+            <button aria-label="Search" className="dn-focus icon-btn" onClick={toggleSearch} style={{ background: 'none', border: 'none', borderRadius: 8, padding: 8, display: 'flex' }}>
               <svg width="19" height="19" viewBox="0 0 19 19" fill="none"><circle cx="8.2" cy="8.2" r="6.2" stroke="currentColor" strokeWidth="1.8" /><line x1="13" y1="13" x2="17.5" y2="17.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
-            </span>
-            <span style={{ position: 'relative', fontSize: 19 }} onClick={toggleMobileMenu}>
-              &#128722;<span style={{ position: 'absolute', top: -6, right: -8, background: 'oklch(0.62 0.16 148)', color: 'oklch(0.16 0.02 150)', borderRadius: 8, padding: '0 4px', fontSize: 10, fontWeight: 700 }}>{cartCount}</span>
-            </span>
-            <span style={{ fontSize: 22, lineHeight: 1 }} onClick={toggleMobileMenu}>&#9776;</span>
-          </button>
+            </button>
+            <button
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileMenuOpen}
+              className="dn-focus icon-btn hamburger-btn"
+              onClick={toggleMobileMenu}
+              style={{ background: 'none', border: 'none', borderRadius: 8, padding: 8, position: 'relative', display: 'flex', alignItems: 'center' }}
+            >
+              <span className={`hamburger-icon${mobileMenuOpen ? ' open' : ''}`}>
+                <span /><span /><span />
+              </span>
+              {cartCount > 0 && (
+                <span style={{ position: 'absolute', top: 2, right: 2, background: 'oklch(0.62 0.16 148)', color: 'oklch(0.16 0.02 150)', borderRadius: 8, padding: '0 4px', fontSize: 10, fontWeight: 700 }}>{cartCount}</span>
+              )}
+            </button>
+          </div>
         </div>
 
         <SearchOverlay isOpen={searchOpen} query={searchQuery} onQueryChange={setSearchQuery} onClose={closeSearch} />

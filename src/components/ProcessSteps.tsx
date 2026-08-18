@@ -34,7 +34,7 @@ export default function ProcessSteps() {
   return (
     <section ref={sectionRef} className={`dn-fade-section${sectionInView ? ' dn-in-view' : ''}`} style={{ background: 'oklch(0.965 0.004 255)', padding: '72px 0' }}>
       <div className="dn-container dn-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'start' }}>
-        <div style={{ position: 'sticky', top: 92, height: 440, borderRadius: 6, overflow: 'hidden' }}>
+        <div className="process-media" style={{ position: 'sticky', top: 92, height: 440, borderRadius: 6, overflow: 'hidden' }}>
           {processStepDefs.map((s, i) => (
             <div
               key={s.title}

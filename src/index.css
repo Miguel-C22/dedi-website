@@ -48,6 +48,11 @@ button { font-family: inherit; cursor: pointer; }
   .dn-grid-2 { grid-template-columns: 1fr !important; }
   .dn-case-study { grid-template-columns: 1fr !important; }
   .dn-footer-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* Once the 2-col grid collapses to 1 column, there's no room for the image
+     to stay pinned while the steps scroll past it — sticky just leaves it
+     floating mid-page. Pin it in normal flow instead, sized for a phone. */
+  .process-media { position: relative !important; top: auto !important; height: 260px !important; }
 }
 
 /* ===== Header / nav scroll state ===== */
@@ -63,11 +68,47 @@ button { font-family: inherit; cursor: pointer; }
 .dn-dropdown-panel { display: none; position: fixed; left: 0; right: 0; top: 68px; background: #fff; border-bottom: 1px solid oklch(0.91 0.005 255); box-shadow: 0 20px 40px -20px rgba(15,30,60,0.2); z-index: 49; animation: dn-fade-in .15s ease; }
 .dn-dropdown-panel.open { display: block; }
 
+.icon-btn { transition: background .15s ease; }
+#site-header .icon-btn:hover { background: rgba(255,255,255,0.12); }
+#site-header.scrolled .icon-btn:hover { background: oklch(0.94 0.005 255); }
+
+/* Animated hamburger -> X */
+.hamburger-icon { position: relative; width: 20px; height: 15px; display: inline-block; }
+.hamburger-icon span { position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px; background: currentColor; transition: transform .25s ease, opacity .2s ease, top .25s ease; }
+.hamburger-icon span:nth-child(1) { top: 0; }
+.hamburger-icon span:nth-child(2) { top: 6.5px; }
+.hamburger-icon span:nth-child(3) { top: 13px; }
+.hamburger-icon.open span:nth-child(1) { top: 6.5px; transform: rotate(45deg); }
+.hamburger-icon.open span:nth-child(2) { opacity: 0; }
+.hamburger-icon.open span:nth-child(3) { top: 6.5px; transform: rotate(-45deg); }
+
 #search-overlay { display: none; position: absolute; left: 0; right: 0; top: 100%; background: oklch(0.975 0.005 255); border-bottom: 1px solid oklch(0.91 0.005 255); box-shadow: 0 20px 40px -20px rgba(15,30,60,0.2); z-index: 55; animation: dn-fade-in .15s ease; }
 #search-overlay.open { display: block; }
 
+.search-submit-icon { display: none; }
+@media (max-width: 640px) {
+  .search-bar-row { gap: 8px !important; }
+  .search-input { padding: 13px 14px !important; }
+  .search-submit-btn { padding: 0 !important; width: 46px; }
+  .search-submit-icon { display: block; }
+  .search-submit-label { display: none; }
+  .search-result-row { flex-wrap: wrap; gap: 4px 10px; }
+}
+
 #mobile-menu { display: none; position: fixed; inset: 0; z-index: 100; background: #fff; overflow-y: auto; animation: dn-fade-in .15s ease; }
 #mobile-menu.open { display: block; }
+
+.mobile-nav-section { border-bottom: 1px solid oklch(0.93 0.005 255); }
+.mobile-nav-toggle { width: 100%; display: flex; align-items: center; justify-content: space-between; background: none; border: none; padding: 15px 0; font-weight: 600; font-size: 16.5px; color: oklch(0.22 0.01 255); font-family: inherit; }
+.mobile-nav-chevron { font-size: 11px; color: oklch(0.5 0.01 255); transition: transform .2s ease; }
+.mobile-nav-chevron.open { transform: rotate(180deg); }
+.mobile-nav-panel { display: flex; flex-direction: column; max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+.mobile-nav-panel.open { max-height: 600px; padding-bottom: 10px; }
+.mobile-nav-sublink { display: flex; flex-direction: column; padding: 10px 14px; border-radius: 6px; color: oklch(0.28 0.01 255); }
+.mobile-nav-sublink:hover { background: oklch(0.96 0.005 255); }
+.mobile-nav-sublink span { font-weight: 600; font-size: 15px; }
+.mobile-nav-sublink small { font-size: 12.5px; color: oklch(0.5 0.01 255); margin-top: 2px; }
+.mobile-nav-group-label { font-size: 11.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: oklch(0.56 0.17 255); padding: 10px 14px 2px; }
 
 #quote-modal-backdrop { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(10,18,32,0.6); overflow-y: auto; justify-content: center; padding: 40px 20px; }
 #quote-modal-backdrop.open { display: flex; }

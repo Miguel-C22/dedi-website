@@ -72,4 +72,20 @@ export const processStepDefs: ProcessStepDef[] = [
 
 export const manufacturers: string[] = ['Cisco', 'Arista', 'Juniper', 'HP / HPE', 'Dell'];
 
+export interface NavLinkDef {
+  title: string;
+  sub?: string;
+}
+
+export const solutionsNavLinks: NavLinkDef[] = [
+  { title: 'IT Asset Disposition', sub: 'Secure processing & recovery' },
+  { title: 'Board-Level Repair', sub: 'Specialized technical repair' },
+  { title: '3PL & Fulfillment', sub: 'Warehousing & global shipping' },
+  { title: 'Global Hardware Supply', sub: 'Sourcing worldwide' },
+  { title: 'Asset Remarketing', sub: 'Strategic resale network' },
+  { title: 'Warranty & Support', sub: 'Extended coverage' },
+];
+
+export const buyCategoryLinks: string[] = ['Switches', 'Routers', 'Firewalls', 'Servers', 'Storage', 'Optics & Transceivers'];
+
 export const headlineWords: string[] = ['Lifecycle', 'Repair', 'Recovery', 'Supply'];
