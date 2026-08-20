@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { buyCategoryLinks, manufacturers, solutionsNavLinks } from '../data';
 
 interface MobileMenuProps {
@@ -7,7 +8,12 @@ interface MobileMenuProps {
   onOpenQuote: () => void;
 }
 
-const plainLinks = ['Sell Equipment', 'About', 'Resources', 'My Account', 'Contact'];
+const plainLinks: { label: string; to?: string }[] = [
+  { label: 'Sell Equipment', to: '/sell' },
+  { label: 'Dedicated Difference', to: '/dedicated-difference' },
+  { label: 'Resources' },
+  { label: 'My Account' },
+];
 
 export default function MobileMenu({ isOpen, onClose, onOpenQuote }: MobileMenuProps) {
   const [openSection, setOpenSection] = useState<string | null>(null);
@@ -53,20 +59,32 @@ export default function MobileMenu({ isOpen, onClose, onOpenQuote }: MobileMenuP
           </div>
         </div>
 
-        {plainLinks.map(label => (
-          <a
-            key={label}
-            href="#"
-            onClick={e => e.preventDefault()}
-            className="dn-focus"
-            style={{ padding: '15px 0', borderBottom: '1px solid oklch(0.93 0.005 255)', fontWeight: 600, fontSize: 16.5, color: 'oklch(0.22 0.01 255)' }}
-          >
-            {label}
-          </a>
+        {plainLinks.map(({ label, to }) => (
+          to ? (
+            <Link
+              key={label}
+              to={to}
+              onClick={onClose}
+              className="dn-focus"
+              style={{ padding: '15px 0', borderBottom: '1px solid oklch(0.93 0.005 255)', fontWeight: 600, fontSize: 16.5, color: 'oklch(0.22 0.01 255)' }}
+            >
+              {label}
+            </Link>
+          ) : (
+            <a
+              key={label}
+              href="#"
+              onClick={e => e.preventDefault()}
+              className="dn-focus"
+              style={{ padding: '15px 0', borderBottom: '1px solid oklch(0.93 0.005 255)', fontWeight: 600, fontSize: 16.5, color: 'oklch(0.22 0.01 255)' }}
+            >
+              {label}
+            </a>
+          )
         ))}
-        <a href="#" onClick={e => e.preventDefault()} className="dn-focus" style={{ padding: '15px 0', fontWeight: 600, fontSize: 16.5, color: 'oklch(0.45 0.01 255)' }}>
-          Careers
-        </a>
+        <Link to="/contact" onClick={onClose} className="dn-focus" style={{ padding: '15px 0', fontWeight: 700, fontSize: 16.5, color: 'oklch(0.56 0.17 255)' }}>
+          Contact
+        </Link>
 
         <div style={{ marginTop: 12, paddingTop: 20, borderTop: '1px solid oklch(0.93 0.005 255)', display: 'flex', flexDirection: 'column', gap: 4 }}>
           <a href="#" onClick={e => e.preventDefault()} className="dn-focus" style={{ padding: '10px 0', fontWeight: 600, fontSize: 15, color: 'oklch(0.45 0.01 255)' }}>Login</a>

@@ -1,50 +1,23 @@
-import { useEffect, useState } from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import TrustBar from './components/TrustBar';
-import SolutionsHub from './components/SolutionsHub';
-import ProcessSteps from './components/ProcessSteps';
-import GlobalReach from './components/GlobalReach';
-import WhyDedicated from './components/WhyDedicated';
-import Certifications from './components/Certifications';
-import CaseStudy from './components/CaseStudy';
-import Sustainability from './components/Sustainability';
-import FinalCTA from './components/FinalCTA';
-import Footer from './components/Footer';
-import QuoteModal from './components/QuoteModal';
+import { Route, Routes } from 'react-router-dom';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import CareersPage from './pages/CareersPage';
+import ContactPage from './pages/ContactPage';
+import DedicatedDifferencePage from './pages/DedicatedDifferencePage';
+import RmaPage from './pages/RmaPage';
+import SellPage from './pages/SellPage';
 
 export default function App() {
-  const [quoteOpen, setQuoteOpen] = useState(false);
-  const [quoteSelection, setQuoteSelection] = useState('Purchase hardware');
-
-  useEffect(() => {
-    document.body.style.overflow = quoteOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [quoteOpen]);
-
-  const openQuoteModal = () => {
-    setQuoteSelection('Purchase hardware');
-    setQuoteOpen(true);
-  };
-  const closeQuoteModal = () => setQuoteOpen(false);
-
   return (
-    <div style={{ position: 'relative', minHeight: '100vh' }}>
-      <Header onOpenQuote={openQuoteModal} />
-      <Hero onOpenQuote={openQuoteModal} />
-      <TrustBar />
-      <SolutionsHub />
-      <ProcessSteps />
-      <GlobalReach />
-      <WhyDedicated />
-      <Certifications />
-      <CaseStudy />
-      <Sustainability />
-      <FinalCTA onOpenQuote={openQuoteModal} />
-      <Footer />
-      <QuoteModal isOpen={quoteOpen} selection={quoteSelection} onSelect={setQuoteSelection} onClose={closeQuoteModal} />
-    </div>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="careers" element={<CareersPage />} />
+        <Route path="contact" element={<ContactPage />} />
+        <Route path="dedicated-difference" element={<DedicatedDifferencePage />} />
+        <Route path="rma" element={<RmaPage />} />
+        <Route path="sell" element={<SellPage />} />
+      </Route>
+    </Routes>
   );
 }

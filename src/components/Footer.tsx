@@ -1,8 +1,10 @@
-const footerColumns: { heading: string; links: string[] }[] = [
-  { heading: 'Solutions', links: ['IT Asset Disposition', 'Board-Level Repair', '3PL & Fulfillment', 'Global Hardware Supply', 'Asset Remarketing', 'Warranty & Support'] },
-  { heading: 'Buy & Sell', links: ['Shop Hardware', 'Product Search', 'Sell Equipment', 'Condition Guide', 'Guarantee & Returns'] },
-  { heading: 'Company', links: ['About', 'Dedicated Difference', 'Careers', 'Contact'] },
-  { heading: 'Resources', links: ['Resources', 'FAQ', 'Certifications', 'Privacy Policy', 'Terms and Conditions'] },
+import { Link } from 'react-router-dom';
+
+const footerColumns: { heading: string; links: { label: string; to?: string }[] }[] = [
+  { heading: 'Solutions', links: ['IT Asset Disposition', 'Board-Level Repair', '3PL & Fulfillment', 'Global Hardware Supply', 'Asset Remarketing', 'Warranty & Support'].map(label => ({ label })) },
+  { heading: 'Buy & Sell', links: [{ label: 'Shop Hardware' }, { label: 'Product Search' }, { label: 'Sell Equipment', to: '/sell' }, { label: 'Condition Guide' }, { label: 'Guarantee & Returns', to: '/rma' }] },
+  { heading: 'Company', links: [{ label: 'Dedicated Difference', to: '/dedicated-difference' }, { label: 'Careers', to: '/careers' }, { label: 'Contact', to: '/contact' }] },
+  { heading: 'Resources', links: ['Resources', 'FAQ', 'Certifications', 'Privacy Policy', 'Terms and Conditions'].map(label => ({ label })) },
 ];
 
 export default function Footer() {
@@ -26,8 +28,12 @@ export default function Footer() {
           <div key={col.heading}>
             <div style={{ fontWeight: 700, color: '#fff', fontSize: 13.5, marginBottom: 16 }}>{col.heading}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 13.5 }}>
-              {col.links.map(link => (
-                <a key={link} href="#" style={{ color: 'oklch(0.75 0.02 255)' }}>{link}</a>
+              {col.links.map(({ label, to }) => (
+                to ? (
+                  <Link key={label} to={to} style={{ color: 'oklch(0.75 0.02 255)' }}>{label}</Link>
+                ) : (
+                  <a key={label} href="#" onClick={e => e.preventDefault()} style={{ color: 'oklch(0.75 0.02 255)' }}>{label}</a>
+                )
               ))}
             </div>
           </div>

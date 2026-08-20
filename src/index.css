@@ -25,6 +25,16 @@ button { font-family: inherit; cursor: pointer; }
 .dn-card:hover { box-shadow: 0 12px 28px -12px rgba(15,30,60,0.18); transform: translateY(-2px); }
 .dn-placeholder-img { background: repeating-linear-gradient(135deg, oklch(0.9 0.01 255), oklch(0.9 0.01 255) 10px, oklch(0.94 0.008 255) 10px, oklch(0.94 0.008 255) 20px); display: flex; align-items: center; justify-content: center; color: oklch(0.45 0.02 255); font-family: 'Source Sans 3', monospace; font-size: 12.5px; text-align: center; padding: 12px; }
 
+.dn-input, .dn-select, .dn-textarea { width: 100%; padding: 12px 14px; border: 1px solid oklch(0.85 0.005 255); border-radius: 5px; font-size: 14.5px; box-sizing: border-box; font-family: 'Source Sans 3', sans-serif; background: #fff; }
+.dn-input:focus, .dn-select:focus, .dn-textarea:focus { outline: 2px solid oklch(0.62 0.16 148); border-color: transparent; }
+
+@media (max-width: 900px) {
+  .dn-contact-grid { grid-template-columns: 1fr !important; }
+  .dn-form-grid { grid-template-columns: 1fr !important; }
+  .dn-guarantee-grid { grid-template-columns: 1fr !important; }
+  .dn-affiliate-grid { grid-template-columns: 1fr !important; }
+}
+
 @keyframes dn-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @keyframes dn-globe-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes dn-route-flow { from { stroke-dashoffset: 18; } to { stroke-dashoffset: 0; } }
@@ -133,6 +143,21 @@ button { font-family: inherit; cursor: pointer; }
 .advantage-item { display: flex; gap: 20px; opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
 #advantages-grid.revealed .advantage-item { opacity: 1; transform: none; }
 
+/* ===== Generic staggered grid reveal (careers / dedicated difference) ===== */
+.dn-reveal-item { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+.dn-reveal-grid.revealed .dn-reveal-item { opacity: 1; transform: none; }
+
+/* ===== Careers culture photo overlap ===== */
+.dn-inset-photo { left: -24px; width: 48%; }
+@media (max-width: 640px) {
+  .dn-inset-photo { left: 0; width: 42%; }
+}
+
+/* ===== Testimonial carousel arrows (dedicated difference) ===== */
+@media (max-width: 480px) {
+  .dn-carousel-arrow { width: 34px !important; height: 34px !important; font-size: 15px !important; }
+}
+
 /* ===== Lifecycle diagram reveal ===== */
 .lifecycle-diagram { opacity: 0; transform: translateY(16px) scale(0.96); transition: opacity .6s ease, transform .6s ease; }
 .lifecycle-diagram.revealed { opacity: 1; transform: none; }
@@ -147,7 +172,8 @@ button { font-family: inherit; cursor: pointer; }
 .process-step.active .step-circle { background: oklch(0.56 0.17 255); }
 
 /* ===== Metrics count-up ===== */
-.metric-item { text-align: center; border-left: 1px solid rgba(255,255,255,0.14); opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .5s ease; }
+.metric-item { text-align: center; padding: 0 16px; opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .5s ease; }
 .metric-item.counted { opacity: 1; transform: none; }
+.metric-item-value { white-space: nowrap; }
 
 #headline-word { transition: opacity .3s ease; }

@@ -4,10 +4,10 @@ export default function TrustBar() {
   const [ref, p] = useCountUp<HTMLElement>();
 
   const metrics = [
-    { value: `${Math.round(250000 * p).toLocaleString()}+`, label: 'Products in stock*' },
-    { value: `${Math.round(60 * p)}+`, label: 'Countries served*' },
-    { value: 'Same-Day', label: 'U.S. shipping*' },
-    { value: '1-Year', label: 'Satisfaction guarantee*' },
+    { value: `${Math.round(250000 * p).toLocaleString()}+`, finalChars: 8, label: 'Products in stock*' },
+    { value: `${Math.round(60 * p)}+`, finalChars: 3, label: 'Countries served*' },
+    { value: 'Same-Day', finalChars: 8, label: 'U.S. shipping*' },
+    { value: '1-Year', finalChars: 6, label: 'Satisfaction guarantee*' },
   ];
 
   return (
@@ -16,10 +16,10 @@ export default function TrustBar() {
         <div style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: 1.4, color: 'oklch(0.68 0.16 148)', textTransform: 'uppercase', marginBottom: 12 }}>By The Numbers</div>
         <h2 style={{ fontSize: 'clamp(24px,2.8vw,32px)', fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>Scale you can build on</h2>
       </div>
-      <div className="dn-container dn-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24 }}>
+      <div className="dn-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 24 }}>
         {metrics.map(m => (
-          <div key={m.label} className={`metric-item${p > 0 ? ' counted' : ''}`}>
-            <div style={{ fontFamily: "'Public Sans', sans-serif", fontWeight: 800, fontSize: 'clamp(32px,4.2vw,48px)', color: '#fff' }}>{m.value}</div>
+          <div key={m.label} className={`metric-item${p > 0 ? ' counted' : ''}`} style={{ flex: '1 1 160px', maxWidth: 220 }}>
+            <div className="metric-item-value" style={{ fontFamily: "'Public Sans', sans-serif", fontWeight: 800, fontSize: 'clamp(32px,4.2vw,48px)', color: '#fff', minWidth: `${m.finalChars}ch` }}>{m.value}</div>
             <div style={{ fontSize: 14, color: 'oklch(0.78 0.02 255)', marginTop: 8, letterSpacing: 0.2 }}>{m.label}</div>
           </div>
         ))}

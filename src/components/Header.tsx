@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useScrolled } from '../hooks/useScrolled';
 import { buyCategoryLinks, solutionsNavLinks } from '../data';
 import MobileMenu from './MobileMenu';
@@ -10,8 +11,20 @@ interface HeaderProps {
 
 type MenuKey = 'solutions' | 'buy' | null;
 
+const activePageForPath = (pathname: string) => {
+  switch (pathname) {
+    case '/contact': return 'contact';
+    case '/sell': return 'sell';
+    case '/careers': return 'careers';
+    case '/dedicated-difference': return 'about';
+    default: return 'home';
+  }
+};
+
 export default function Header({ onOpenQuote }: HeaderProps) {
   const scrolled = useScrolled(48);
+  const { pathname } = useLocation();
+  const activePage = activePageForPath(pathname);
   const [openMenu, setOpenMenu] = useState<MenuKey>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -64,7 +77,9 @@ export default function Header({ onOpenQuote }: HeaderProps) {
       <header id="site-header" className={scrolled ? 'scrolled' : ''} onMouseLeave={closeAllMenus}>
         <div className="dn-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 68, gap: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-            <img id="site-logo" src="/uploads/Logo-4-1.webp" alt="Dedicated Networks" style={{ height: 30, width: 'auto' }} />
+            <Link to="/">
+              <img id="site-logo" src="/uploads/Logo-4-1.webp" alt="Dedicated Networks" style={{ height: 30, width: 'auto' }} />
+            </Link>
           </div>
 
           <nav className="dn-desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 18, flex: 1, justifyContent: 'center', flexWrap: 'nowrap', minWidth: 0 }}>
@@ -136,9 +151,28 @@ export default function Header({ onOpenQuote }: HeaderProps) {
               </div>
             </div>
 
-            <a href="#" className="dn-focus dn-glass-link" style={{ fontWeight: 600, fontSize: 15, padding: '8px 4px', whiteSpace: 'nowrap' }}>Sell Equipment</a>
-            <a href="#" className="dn-focus dn-glass-link" style={{ fontWeight: 600, fontSize: 15, padding: '8px 4px', whiteSpace: 'nowrap' }}>About</a>
-            <a href="#" className="dn-focus dn-glass-link" style={{ fontWeight: 600, fontSize: 15, padding: '8px 4px', whiteSpace: 'nowrap' }}>Resources</a>
+            <Link
+              to="/sell"
+              className="dn-focus dn-glass-link"
+              style={{ fontWeight: activePage === 'sell' ? 700 : 600, fontSize: 15, padding: '8px 4px', whiteSpace: 'nowrap', ...(activePage === 'sell' ? { color: 'oklch(0.68 0.16 148)' } : {}) }}
+            >
+              Sell Equipment
+            </Link>
+            <Link
+              to="/dedicated-difference"
+              className="dn-focus dn-glass-link"
+              style={{ fontWeight: activePage === 'about' ? 700 : 600, fontSize: 15, padding: '8px 4px', whiteSpace: 'nowrap', ...(activePage === 'about' ? { color: 'oklch(0.68 0.16 148)' } : {}) }}
+            >
+              Dedicated Difference
+            </Link>
+            <a href="#" onClick={e => e.preventDefault()} className="dn-focus dn-glass-link" style={{ fontWeight: 600, fontSize: 15, padding: '8px 4px', whiteSpace: 'nowrap' }}>Resources</a>
+            <Link
+              to="/contact"
+              className="dn-focus dn-glass-link"
+              style={{ fontWeight: activePage === 'contact' ? 700 : 600, fontSize: 15, padding: '8px 4px', whiteSpace: 'nowrap', ...(activePage === 'contact' ? { color: 'oklch(0.68 0.16 148)' } : {}) }}
+            >
+              Contact
+            </Link>
           </nav>
 
           <div className="dn-desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 18, flexShrink: 0 }}>
